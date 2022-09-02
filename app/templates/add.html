@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Food Tracker!</title>
+    </head>
+    <body>
+        <a href="{{ url_for('bp.index')}}">Home</a>
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.food_name.label }}<br>
+                {{ form.food_name(size=32) }}
+                {% for error in form.food_name.errors %}
+                <span style="color:crimson;">[{{ error }}]</span>
+                {% endfor %}<br>
+                {{ form.proteins.label }}<br>
+                {{ form.proteins(size=32) }}
+                {% for error in form.proteins.errors %}
+                <span style="color:crimson;">[{{ error }}]</span>
+                {% endfor %}<br>
+                {{ form.carbs.label }}<br>
+                {{ form.carbs(size=32) }}
+                {% for error in form.carbs.errors %}
+                <span style="color:crimson;">[{{ error }}]</span>
+                {% endfor %}<br>
+                {{ form.fats.label }}<br>
+                {{ form.fats(size=32) }}
+                {% for error in form.fats.errors %}
+                <span style="color:crimson;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>{{ form.submit() }}</p>
+        </form>
+    <hr>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% if food_exists %}
+    <ul>
+        {% for item in food %}
+        <li>{{ item.name }} {{ item.proteins }} {{ item.carbs }} {{ item.fats }} 
+            <button><a href="{{ url_for('bp.edit_food', food_id=item.id) }}">Edit Food</a></button>
+            <button><a href="{{ url_for('bp.remove_food', food_id=item.id) }}">Remove Food</a></button>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>Add a food to see the list of foods!</p>
+    {% endif %}
+    </body>
+</html>
