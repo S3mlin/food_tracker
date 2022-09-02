@@ -161,4 +161,4 @@ cython_debug/
 
 
 food_tracker_venv/
-/food_tracker.db
+app/food_tracker.db
